@@ -21,7 +21,7 @@ function getRandom(min, max) {
 
 var game = new Phaser.Game(config);
 
-var framesInterval = 60;
+var framesInterval = 30;
 var snake;
 var fruit;
 var keyboard;
@@ -38,54 +38,54 @@ function create() {
 
         initialize:
         function Snake(scene) {
-            this.headPosition = new Phaser.Geom.Point(32, 260);
+
+            let initial_x = 32;
+            let initial_y = 260;
+
+            this.headPosition = new Phaser.Geom.Point(initial_x, initial_y);
 
             this.body = scene.add.group();
 
-            this.head = this.body.create(32, 260, 'snake');
+            this.head = this.body.create(initial_x, initial_y, 'snake');
             this.head.setOrigin(0);
-
-            this.speed = 100;
-
-            this.moveTime = 0;
 
             this.alive = true;
 
-            this.tail = new Phaser.Geom.Point(32, 260);
+            this.snake_body = new Phaser.Geom.Point(initial_x, initial_y);
 
             this.heading = 'RIGHT';
             this.direction = 'RIGHT';
         },
         changeDirection: function(newDirection) {
-            if(newDirection == 'LEFT') {
+            if(newDirection == 'LEFT' && this.heading != 'RIGHT') {
                 this.heading = 'LEFT';
             }
-            if(newDirection == 'RIGHT') {
+            if(newDirection == 'RIGHT' && this.heading != 'LEFT') {
                 this.heading = 'RIGHT';
             }
-            if(newDirection == 'UP') {
+            if(newDirection == 'UP' && this.heading != 'DOWN') {
                 this.heading = 'UP';
             }
-            if(newDirection == 'DOWN') {
+            if(newDirection == 'DOWN' && this.heading != 'UP') {
                 this.heading = 'DOWN';
             }
         },
         move: function(time) {
             switch (this.heading) {
                 case 'LEFT':
-                    this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
+                    this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, game_width/16);
                     break;
 
                 case 'RIGHT':
-                    this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 40);
+                    this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, game_width/16);
                     break;
 
                 case 'UP':
-                    this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 40);
+                    this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, game_height/16);
                     break;
 
                 case 'DOWN':
-                    this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 40);
+                    this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, game_height/16);
                     break;
             }
 
@@ -97,10 +97,16 @@ function create() {
             if (this.head.x + 16 === fruit.x && this.head.y + 16 === fruit.y) {
                 fruit.eat();
                 fruit.create();
+                this.grow()
                 return true;
             }
             return false;
-        }
+        },
+        grow: function ()
+        {
+            var newPart = this.body.create(this.snake_body.x, this.snake_body.y, 'snake');
+            newPart.setOrigin(0);
+        },
     });
     
     var Fruit = new Phaser.Class({
@@ -113,7 +119,6 @@ function create() {
 
             this.setTexture('apple');
             this.create();
-            // this.setOrigin(0);
 
             this.total = 0;
 
