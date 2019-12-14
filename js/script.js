@@ -23,11 +23,13 @@ var game = new Phaser.Game(config);
 
 var framesInterval = 60;
 var snake;
+var fruit;
 var keyboard;
 var score;
 
 function preload() {
     this.load.image('apple', 'https://github.com/rodrigo1808/Snake_Game/blob/master/assets/imgs/apple.png?raw=true');
+    this.load.image('snake', 'https://github.com/rodrigo1808/Snake_Game/blob/master/assets/imgs/snake.png?raw=true');
 }
 
 function create() {
@@ -40,7 +42,7 @@ function create() {
 
             this.body = scene.add.group();
 
-            this.head = this.body.create(32, 260, 'apple');
+            this.head = this.body.create(32, 260, 'snake');
             this.head.setOrigin(0);
 
             this.speed = 100;
@@ -90,6 +92,14 @@ function create() {
             this.direction = this.heading;
 
             Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 16, this.headPosition.y * 16, 1);
+        },
+        eating: function(fruit) {
+            if (this.head.x + 16 === fruit.x && this.head.y + 16 === fruit.y) {
+                fruit.eat();
+                fruit.create();
+                return true;
+            }
+            return false;
         }
     });
     
@@ -102,9 +112,7 @@ function create() {
             Phaser.GameObjects.Image.call(this, scene)
 
             this.setTexture('apple');
-            x = getRandom(64, 568);
-            y = getRandom(64, 568);
-            this.setPosition(x, y);
+            this.create();
             // this.setOrigin(0);
 
             this.total = 0;
@@ -113,6 +121,12 @@ function create() {
         },
         eat: function() {
             this.total++;
+            score.text = parseInt(score.text) + 1;
+        },
+        create: function() {
+            x = getRandom(64, 568);
+            y = getRandom(64, 568);
+            this.setPosition(x, y);
         }
 
     });
@@ -121,7 +135,7 @@ function create() {
         fontFamily: 'Arial', 
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#000000',
+        color: '#000000'
     })
 
     snake = new Snake(this);
@@ -139,7 +153,6 @@ function update(time){
 
 
     if(time - lastTime > framesInterval) {
-        console.log(time);
         lastTime = time;
         snake.move(time);
     }
@@ -150,19 +163,23 @@ function update(time){
     }
 
     if (keyboard.left.isDown) {
-        console.log('esquerda');
+        //console.log('esquerda');
         snake.changeDirection('LEFT');
     }
     else if (keyboard.right.isDown) {
-        console.log('direita');
+        //console.log('direita');
         snake.changeDirection('RIGHT');
     }
     else if (keyboard.up.isDown) {
-        console.log('cima');
+        //console.log('cima');
         snake.changeDirection('UP');
     }
     else if (keyboard.down.isDown) {
-        console.log('baixo');
+        //console.log('baixo');
         snake.changeDirection('DOWN');
+    }
+
+    if (snake.eating(fruit)) {
+        console.log('comeu');
     }
 }
