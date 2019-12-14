@@ -15,11 +15,13 @@ var config = {
 };
 
 function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+    let random = Math.floor(Math.random() * (max - min) + min)
+    return random - (random % PIXEL_SIZE);
 }
 
 var game = new Phaser.Game(config);
 
+var framesInterval = 60;
 var snake;
 var keyboard;
 var score;
@@ -67,7 +69,6 @@ function create() {
             }
         },
         move: function(time) {
-            console.log(this.heading);
             switch (this.heading) {
                 case 'LEFT':
                     this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
@@ -124,7 +125,7 @@ function create() {
     })
 
     snake = new Snake(this);
-    snake.move();
+    snake.changeDirection('UP');
 
     fruit = new Fruit(this);
 
@@ -132,30 +133,36 @@ function create() {
 
 }
 
+var lastTime = 0
+
 function update(time){
 
-    if(snake.alive) {
+
+    if(time - lastTime > framesInterval) {
+        console.log(time);
+        lastTime = time;
         snake.move(time);
+    }
+
+    
+    if(snake.alive) {
+        // snake.move(time);
     }
 
     if (keyboard.left.isDown) {
         console.log('esquerda');
-        this.keyboard = 'LEFT';
         snake.changeDirection('LEFT');
     }
     else if (keyboard.right.isDown) {
         console.log('direita');
-        this.keyboard = 'RIGTH';
         snake.changeDirection('RIGHT');
     }
     else if (keyboard.up.isDown) {
         console.log('cima');
-        this.keyboard = 'UP';
         snake.changeDirection('UP');
     }
     else if (keyboard.down.isDown) {
         console.log('baixo');
-        this.keyboard = 'DOWN';
         snake.changeDirection('DOWN');
     }
 }
