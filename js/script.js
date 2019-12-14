@@ -51,6 +51,8 @@ function create() {
 
             this.alive = true;
 
+            this.intervalToMove = 100;
+
             this.snake_body = new Phaser.Geom.Point(initial_x, initial_y);
 
             this.heading = 'RIGHT';
