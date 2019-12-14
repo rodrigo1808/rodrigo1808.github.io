@@ -51,9 +51,7 @@ function create() {
 
             this.alive = true;
 
-            this.intervalToMove = 100;
-
-            this.snake_body = new Phaser.Geom.Point(initial_x, initial_y);
+            this.snake_body = new Phaser.Geom.Point(-100, -100);
 
             this.heading = 'RIGHT';
             this.direction = 'RIGHT';
@@ -90,25 +88,34 @@ function create() {
                     this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, game_height/16);
                     break;
             }
-
             this.direction = this.heading;
 
             Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 16, this.headPosition.y * 16, 1);
         },
         eating: function(fruit) {
-            if (this.head.x + 16 === fruit.x && this.head.y + 16 === fruit.y) {
+            
+            if ( comparePixel(this.head.x, this.head.y, fruit.x, fruit.y) ) {
                 fruit.eat();
                 fruit.create();
-                this.grow()
+                this.increaseSize()
                 return true;
             }
             return false;
         },
-        grow: function ()
-        {
+        increaseSize: function() {
+            console.log(this.body);
+            console.log(this.snake_body);
             var newPart = this.body.create(this.snake_body.x, this.snake_body.y, 'snake');
             newPart.setOrigin(0);
         },
+        checkDeath: function()  {
+            for(let i = 1; i < this.body.children.size; i++) {
+                if( (this.head.x == this.body.children.entries[i].x) && (this.head.y == this.body.children.entries[i].y) ) {
+                    console.log('perdeu');
+                    this.alive = false;
+                }
+            }
+        }
     });
     
     var Fruit = new Phaser.Class({
@@ -154,39 +161,50 @@ function create() {
 
 }
 
+function comparePixel(x1, y1, x2, y2) {
+    if( (x1 + 16 === x2 && y1 + 16 === y2) ||
+        (x1 === x2 - 16 && y1 === y2) ||
+        ( (x1 - x2 == -32 || x1 === x2) && y1 === y2) ||
+        ( (y1 - y2 == -32) && x1 === x2) ) {
+            return true;
+    }
+
+    return false;
+}
+
 var lastTime = 0
 
 function update(time){
 
+    if(!snake.alive) {
+        return;
+    }
 
     if(time - lastTime > framesInterval) {
         lastTime = time;
         snake.move(time);
     }
 
-    
-    if(snake.alive) {
-        // snake.move(time);
-    }
-
-    if (keyboard.left.isDown) {
+    if(keyboard.left.isDown) {
         //console.log('esquerda');
         snake.changeDirection('LEFT');
     }
-    else if (keyboard.right.isDown) {
+    else if(keyboard.right.isDown) {
         //console.log('direita');
         snake.changeDirection('RIGHT');
     }
-    else if (keyboard.up.isDown) {
+    else if(keyboard.up.isDown) {
         //console.log('cima');
         snake.changeDirection('UP');
     }
-    else if (keyboard.down.isDown) {
+    else if(keyboard.down.isDown) {
         //console.log('baixo');
         snake.changeDirection('DOWN');
     }
 
-    if (snake.eating(fruit)) {
+    if(snake.eating(fruit)) {
         console.log('comeu');
     }
+
+    if(snake.checkDeath()) {}
 }
