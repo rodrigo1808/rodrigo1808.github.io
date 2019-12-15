@@ -1,6 +1,6 @@
 const PIXEL_SIZE = 32;
-const game_width = 20 * PIXEL_SIZE;
-const game_height = 20 * PIXEL_SIZE;
+const game_width = window.innerWidth - (window.innerWidth % 32);
+const game_height = window.innerHeight - (window.innerHeight % 32);
 
 var config = {
     type: Phaser.AUTO,
@@ -19,6 +19,22 @@ function getRandom(min, max) {
     return random - (random % PIXEL_SIZE);
 }
 
+function getGameWidth() {
+    if(window.innerWidth < 600) {
+        return window.innerWidth - (window.innerWidth % 32);
+    }
+    
+    return 30 * PIXEL_SIZE;
+}
+
+function getGameHeight() {
+    if(window.innerWidth < 600) {
+        return window.innerHeight - (window.innerHeight % 32);
+    }
+    
+    return 20 * PIXEL_SIZE;
+}
+
 var game = new Phaser.Game(config);
 
 var framesInterval = 30;
@@ -28,8 +44,8 @@ var keyboard;
 var score;
 
 function preload() {
-    this.load.image('apple', './assets/imgs/apple.png');
-    this.load.image('snake', './assets/imgs/snake.png');
+    this.load.image('apple', /*'./assets/imgs/apple.png'*/ 'https://github.com/rodrigo1808/rodrigo1808.github.io/blob/master/assets/imgs/apple.png?raw=true');
+    this.load.image('snake', 'https://github.com/rodrigo1808/rodrigo1808.github.io/blob/master/assets/imgs/snake.png?raw=true');
 }
 
 function create() {
@@ -138,18 +154,18 @@ function create() {
             score.text = parseInt(score.text) + 1;
         },
         create: function() {
-            x = getRandom(64, 568);
-            y = getRandom(64, 568);
+            x = getRandom(64, game_width);
+            y = getRandom(64, game_height);
             this.setPosition(x, y);
         }
 
     });
 
-    score = this.add.text(10, 10, 0, { 
+    score = this.add.text(game_width/2, 10, 0, { 
         fontFamily: 'Arial', 
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 'bold',
-        color: '#000000'
+        color: '#555555'
     })
 
     snake = new Snake(this);
@@ -209,3 +225,38 @@ function update(time){
     }
 
 }
+
+var clickInit = { x: 0, y: 0 };
+
+document.addEventListener("mousedown", (mouse) => { 
+    console.log('comecou');
+    clickInit.x = mouse.clientX;     // Get the horizontal coordinate
+    clickInit.y = event.clientY;     // Get the vertical coordinate
+    console.log(clickInit.x, clickInit.y);
+});
+
+document.addEventListener("mouseup", (mouse) => { 
+    console.log('terminou');
+    console.log(mouse.clientX, mouse.clientY);
+    let difference_x = mouse.clientX - clickInit.x;
+    let difference_y = mouse.clientY - clickInit.y;
+
+    // horizontal
+    if(Math.abs(difference_x) > Math.abs(difference_y)) {
+
+        if(difference_x < 0) {
+            snake.changeDirection('LEFT');
+        } else {
+            snake.changeDirection('RIGHT');
+        }
+
+    } else {
+
+        if(difference_y < 0) {
+            snake.changeDirection('UP');
+        } else {
+            snake.changeDirection('DOWN');
+        }
+
+    }
+});
