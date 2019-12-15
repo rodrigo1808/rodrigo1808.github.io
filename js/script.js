@@ -19,22 +19,6 @@ function getRandom(min, max) {
     return random - (random % PIXEL_SIZE);
 }
 
-function getGameWidth() {
-    if(window.innerWidth < 600) {
-        return window.innerWidth - (window.innerWidth % 32);
-    }
-    
-    return 30 * PIXEL_SIZE;
-}
-
-function getGameHeight() {
-    if(window.innerWidth < 600) {
-        return window.innerHeight - (window.innerHeight % 32);
-    }
-    
-    return 20 * PIXEL_SIZE;
-}
-
 var game = new Phaser.Game(config);
 
 var framesInterval = 30;
@@ -163,7 +147,7 @@ function create() {
 
     score = this.add.text(game_width/2, 10, 0, { 
         fontFamily: 'Arial', 
-        fontSize: 30,
+        fontSize: 50,
         fontWeight: 'bold',
         color: '#555555'
     })
@@ -229,14 +213,13 @@ function update(time){
 var clickInit = { x: 0, y: 0 };
 
 document.addEventListener("touchstart", (touch) => { 
-    clickInit.x = touch.touches[0].clientX;
-    clickInit.y = touch.touches[0].clientY;
+    clickInit.x = touch.changedTouches[0].clientX;
+    clickInit.y = touch.changedTouches[0].clientY;
 });
 
 document.addEventListener("touchend", (touch) => { 
-
-    let difference_x = touch.touches[0].clientX - clickInit.x;
-    let difference_y = touch.touches[0].clientY - clickInit.y;
+    let difference_x = touch.changedTouches[0].clientX - clickInit.x;
+    let difference_y = touch.changedTouches[0].clientY - clickInit.y;
 
     // horizontal move
     if(Math.abs(difference_x) > Math.abs(difference_y)) {
@@ -259,5 +242,3 @@ document.addEventListener("touchend", (touch) => {
 
     }
 });
-
-document.getElementById.add
