@@ -28,8 +28,8 @@ var keyboard;
 var score;
 
 function preload() {
-    this.load.image('apple', 'https://github.com/rodrigo1808/Snake_Game/blob/master/assets/imgs/apple.png?raw=true');
-    this.load.image('snake', 'https://github.com/rodrigo1808/Snake_Game/blob/master/assets/imgs/snake.png?raw=true');
+    this.load.image('apple', './assets/imgs/apple.png');
+    this.load.image('snake', './assets/imgs/snake.png');
 }
 
 function create() {
@@ -185,6 +185,8 @@ function update(time){
         snake.move(time);
     }
 
+    snake.checkDeath()
+
     if(keyboard.left.isDown) {
         //console.log('esquerda');
         snake.changeDirection('LEFT');
@@ -206,5 +208,4 @@ function update(time){
         console.log('comeu');
     }
 
-    if(snake.checkDeath()) {}
 }
