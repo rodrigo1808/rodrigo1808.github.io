@@ -228,20 +228,17 @@ function update(time){
 
 var clickInit = { x: 0, y: 0 };
 
-document.addEventListener("mousedown", (mouse) => { 
-    console.log('comecou');
-    clickInit.x = mouse.clientX;     // Get the horizontal coordinate
-    clickInit.y = event.clientY;     // Get the vertical coordinate
-    console.log(clickInit.x, clickInit.y);
+document.addEventListener("touchstart", (touch) => { 
+    clickInit.x = touch.touches[0].clientX;
+    clickInit.y = touch.touches[0].clientY;
 });
 
-document.addEventListener("mouseup", (mouse) => { 
-    console.log('terminou');
-    console.log(mouse.clientX, mouse.clientY);
-    let difference_x = mouse.clientX - clickInit.x;
-    let difference_y = mouse.clientY - clickInit.y;
+document.addEventListener("touchend", (touch) => { 
 
-    // horizontal
+    let difference_x = touch.touches[0].clientX - clickInit.x;
+    let difference_y = touch.touches[0].clientY - clickInit.y;
+
+    // horizontal move
     if(Math.abs(difference_x) > Math.abs(difference_y)) {
 
         if(difference_x < 0) {
@@ -250,7 +247,9 @@ document.addEventListener("mouseup", (mouse) => {
             snake.changeDirection('RIGHT');
         }
 
-    } else {
+    } 
+    // vertical move
+    else {
 
         if(difference_y < 0) {
             snake.changeDirection('UP');
@@ -260,3 +259,5 @@ document.addEventListener("mouseup", (mouse) => {
 
     }
 });
+
+document.getElementById.add
