@@ -21,7 +21,8 @@ const elementsSizes = {
     contentWidth: 0
 };
 
-function startGame() {
+function startGame(numberOfPlayers) {
+    players = numberOfPlayers;
     elementsSizes.modalHeight = document.getElementById('modal').clientHeight;
     elementsSizes.modalWidth = document.getElementById('modal').clientWidth;
     elementsSizes.contentHeight = document.getElementById('content').clientHeight;
@@ -32,7 +33,13 @@ function startGame() {
     document.getElementById('content').style.height = '0';
     document.getElementById('content').style.width = '0';
     document.getElementById('content').innerHTML = '';
-    snake.alive = true;
+    let interval = setInterval(()=> {
+        snake.alive = true;
+        clearInterval(interval);
+    }, 300);
+    if(numberOfPlayers == 2) {
+        snake2.alive = true;
+    }
 }
 
 function showRestartModal(score) {
@@ -40,7 +47,7 @@ function showRestartModal(score) {
     document.getElementById('modal').style.width = elementsSizes.modalWidth;
     document.getElementById('content').style.height = elementsSizes.contentHeight;
     document.getElementById('content').style.width = elementsSizes.contentWidth;
-    document.getElementById('content').innerHTML = "<p>Sua pontuação</p> <h1> " + score + "</h1> <button onclick='restartGame()'>RESTART</button>";
+    document.getElementById('content').innerHTML = "<p>Sua pontuação</p> <h1 class='number'> " + score + "</h1> <button onclick='restartGame()'>JOGAR DE NOVO</button>";
 }
 
 function restartGame() {
@@ -57,14 +64,18 @@ var game = new Phaser.Game(config);
 var clickInit = { x: 0, y: 0 };
 var framesInterval = 45;
 var snake;
+var snake2;
+var players = 1;
 var fruit;
 var keyboard;
+var keyboard2;
 var score;
 var lastTime = 0
 
 function preload() {
     this.load.image('apple', './assets/imgs/apple.png');
     this.load.image('snake', './assets/imgs/snake.png');
+    this.load.image('snake2', './assets/imgs/snake2.png')
 }
 
 function create() {
@@ -75,17 +86,22 @@ function create() {
     var Snake = new Phaser.Class({
 
         initialize:
-        function Snake(scene) {
+        function Snake(scene, player, x, y) {
 
-            let initial_x = 32;
-            let initial_y = 260;
-
-            this.headPosition = new Phaser.Geom.Point(initial_x, initial_y);
+            this.headPosition = new Phaser.Geom.Point(x, y);
 
             this.body = scene.add.group();
 
-            this.head = this.body.create(initial_x, initial_y, 'snake');
-            this.head.setOrigin(0);
+            this.player = player;
+
+            if(player == 1) {
+                this.head = this.body.create(x, y, 'snake');
+                this.head.setOrigin(0);
+            } else {
+                this.head = this.body.create(x, y, 'snake2');
+                this.head.setOrigin(0);
+            }
+            
 
             this.alive = false;
 
@@ -141,9 +157,11 @@ function create() {
             return false;
         },
         increaseSize: function() {
-            console.log(this.body);
-            console.log(this.snake_body);
-            var newPart = this.body.create(this.snake_body.x, this.snake_body.y, 'snake');
+            if(this.player == 1) {
+                var newPart = this.body.create(this.snake_body.x, this.snake_body.y, 'snake');
+            } else {
+                var newPart = this.body.create(this.snake_body.x, this.snake_body.y, 'snake2');
+            }
             newPart.setOrigin(0);
         },
         checkDeath: function()  {
@@ -175,7 +193,6 @@ function create() {
         eat: function() {
             this.total++;
             score.text = this.total;
-            console.log(framesInterval);
             if( this.total % 5 == 0 && framesInterval > 15) {
                 framesInterval = framesInterval - (40/this.total);
             }
@@ -206,12 +223,23 @@ function create() {
         color: '#555555'
     })
 
-    snake = new Snake(this);
-    snake.changeDirection('UP');
+    snake = new Snake(this, 1, 32, 260);
+    snake2 = new Snake(this, 2, 16, 380);
 
+    let interval = setInterval(()=> {
+        snake.changeDirection('UP');
+        snake2.changeDirection('UP');
+        clearInterval(interval);
+    }, 500)
+    
     fruit = new Fruit(this);
 
     keyboard = this.input.keyboard.createCursorKeys();
+    keyboard2 = this.input.keyboard.addKeys(
+                {up:Phaser.Input.Keyboard.KeyCodes.W,
+                down:Phaser.Input.Keyboard.KeyCodes.S,
+                left:Phaser.Input.Keyboard.KeyCodes.A,
+                right:Phaser.Input.Keyboard.KeyCodes.D});
 
 }
 
@@ -228,16 +256,31 @@ function comparePixel(x1, y1, x2, y2) {
 
 function update(time){
 
+    if(players != 2) {
+        snake2.head.x = -100;
+        snake2.head.y = -100;
+    }
+
     if(!snake.alive) {
         return;
+    }
+
+    if(players == 2) {
+        if(!snake2.alive) {
+            return;
+        }
     }
 
     if(time - lastTime > framesInterval) {
         lastTime = time;
         snake.move(time);
+        if(players == 2) {
+            snake2.move(time);
+        }
     }
 
-    snake.checkDeath()
+    snake.checkDeath();
+    snake2.checkDeath();
 
     if(keyboard.left.isDown) {
         //console.log('esquerda');
@@ -256,8 +299,32 @@ function update(time){
         snake.changeDirection('DOWN');
     }
 
+    if(players == 2) {
+        if(keyboard2.left.isDown) {
+            //console.log('esquerda');
+            snake2.changeDirection('LEFT');
+        }
+        else if(keyboard2.right.isDown) {
+            //console.log('direita');
+            snake2.changeDirection('RIGHT');
+        }
+        else if(keyboard2.up.isDown) {
+            //console.log('cima');
+            snake2.changeDirection('UP');
+        }
+        else if(keyboard2.down.isDown) {
+            //console.log('baixo');
+            snake2.changeDirection('DOWN');
+        }
+    }
+
     if(snake.eating(fruit)) {
-        console.log('comeu');
+        console.log('player 1 comeu');
+    }
+    if(players == 2) {
+        if(snake2.eating(fruit)) {
+            console.log('player 2 comeu');
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=0.5">
         <title>Snake Game - AU</title>
         <link type="text/css" rel="stylesheet" href="assets/style.css">
     </head>
@@ -9,7 +10,11 @@
         <div class="modal" id="modal">
             <div class="content" id="content">
                 <h1>SNAKE GAME</h1>
-                <button onclick="startGame()">START</button>
+                <select id="select">
+                    <option value="1">1 Jogador</option>
+                    <option value="2">2 Jogadores</option>
+                </select>
+                <button onclick="startGame( parseInt(document.getElementById('select').value) )">INICIAR</button>
             </div>
         </div>
         <script type="text/javascript" src="js/phaser.min.js"></script>

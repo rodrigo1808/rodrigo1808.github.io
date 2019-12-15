@@ -32,6 +32,10 @@ h1 {
     margin-bottom: 20%;
 }
 
+.number {
+    font-size: 5em;
+}
+
 button {
     width: 70%;
     height: 10%;
@@ -42,9 +46,18 @@ button {
     cursor: pointer;
 }
 
+select {
+    margin: 0 0 3vh;
+    font-size: 1.5em;
+}
+
 
 @media (max-width: 900px) {
     .content {
       width: 80vw;
     }
-  }
+
+    select {
+        display: none;
+    }
+}
