@@ -44,8 +44,8 @@ var keyboard;
 var score;
 
 function preload() {
-    this.load.image('apple', /*'./assets/imgs/apple.png'*/ 'https://github.com/rodrigo1808/rodrigo1808.github.io/blob/master/assets/imgs/apple.png?raw=true');
-    this.load.image('snake', 'https://github.com/rodrigo1808/rodrigo1808.github.io/blob/master/assets/imgs/snake.png?raw=true');
+    this.load.image('apple', './assets/imgs/apple.png');
+    this.load.image('snake', './assets/imgs/snake.png');
 }
 
 function create() {
