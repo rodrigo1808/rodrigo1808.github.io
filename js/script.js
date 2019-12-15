@@ -6,12 +6,45 @@ var config = {
     type: Phaser.AUTO,
     width: game_width,
     height: game_height,
-    backgroundColor: '#b3e6ff',
+    backgroundColor: '#B3E6FF',
     scene: {
         preload: preload,
         create: create,
         update: update
     }
+};
+
+const elementsSizes = {
+    modalHeight: 0,
+    modalWidth: 0,
+    contentHeight: 0,
+    contentWidth: 0
+};
+
+function startGame() {
+    elementsSizes.modalHeight = document.getElementById('modal').clientHeight;
+    elementsSizes.modalWidth = document.getElementById('modal').clientWidth;
+    elementsSizes.contentHeight = document.getElementById('content').clientHeight;
+    elementsSizes.contentWidth = document.getElementById('content').clientWidth;
+    console.log(elementsSizes);
+    document.getElementById('modal').style.height = '0';
+    document.getElementById('modal').style.width = '0';
+    document.getElementById('content').style.height = '0';
+    document.getElementById('content').style.width = '0';
+    document.getElementById('content').innerHTML = '';
+    snake.alive = true;
+}
+
+function showRestartModal(score) {
+    document.getElementById('modal').style.height = elementsSizes.modalHeight;
+    document.getElementById('modal').style.width = elementsSizes.modalWidth;
+    document.getElementById('content').style.height = elementsSizes.contentHeight;
+    document.getElementById('content').style.width = elementsSizes.contentWidth;
+    document.getElementById('content').innerHTML = "<p>Sua pontuação</p> <h1> " + score + "</h1> <button onclick='restartGame()'>RESTART</button>";
+}
+
+function restartGame() {
+    location.reload();
 };
 
 function getRandom(min, max) {
@@ -21,11 +54,13 @@ function getRandom(min, max) {
 
 var game = new Phaser.Game(config);
 
-var framesInterval = 30;
+var clickInit = { x: 0, y: 0 };
+var framesInterval = 45;
 var snake;
 var fruit;
 var keyboard;
 var score;
+var lastTime = 0
 
 function preload() {
     this.load.image('apple', './assets/imgs/apple.png');
@@ -33,6 +68,9 @@ function preload() {
 }
 
 function create() {
+
+    console.log(game);
+    console.log(this);
 
     var Snake = new Phaser.Class({
 
@@ -49,7 +87,7 @@ function create() {
             this.head = this.body.create(initial_x, initial_y, 'snake');
             this.head.setOrigin(0);
 
-            this.alive = true;
+            this.alive = false;
 
             this.snake_body = new Phaser.Geom.Point(-100, -100);
 
@@ -112,6 +150,7 @@ function create() {
             for(let i = 1; i < this.body.children.size; i++) {
                 if( (this.head.x == this.body.children.entries[i].x) && (this.head.y == this.body.children.entries[i].y) ) {
                     console.log('perdeu');
+                    showRestartModal(fruit.total);
                     this.alive = false;
                 }
             }
@@ -135,12 +174,27 @@ function create() {
         },
         eat: function() {
             this.total++;
-            score.text = parseInt(score.text) + 1;
+            score.text = this.total;
+            console.log(framesInterval);
+            if( this.total % 5 == 0 && framesInterval > 15) {
+                framesInterval = framesInterval - (40/this.total);
+            }
+
         },
         create: function() {
             x = getRandom(64, game_width);
             y = getRandom(64, game_height);
-            this.setPosition(x, y);
+            let samePosition = false;
+            for(let i = 0; i < snake.body.children.size; i++) {
+                if(comparePixel(x, y, snake.body.children.entries[i].x, snake.body.children.entries[i].y)) {
+                    samePosition = true;
+                }
+            }
+            if (samePosition) {
+                this.create();
+            } else {
+                this.setPosition(x, y);
+            }
         }
 
     });
@@ -171,8 +225,6 @@ function comparePixel(x1, y1, x2, y2) {
 
     return false;
 }
-
-var lastTime = 0
 
 function update(time){
 
@@ -209,8 +261,6 @@ function update(time){
     }
 
 }
-
-var clickInit = { x: 0, y: 0 };
 
 document.addEventListener("touchstart", (touch) => { 
     clickInit.x = touch.changedTouches[0].clientX;
