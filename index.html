@@ -1,25 +1,31 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=0.5">
-        <link rel="shortcut icon" type='image/x-icon' href="./assets/imgs/favicon.ico" />
-        <title>Snake Game - AU</title>
-        <link type="text/css" rel="stylesheet" href="assets/style.css">
-    </head>
+    <header>
+        <link type="text/css" rel="stylesheet" href="style.css">
+    </header>
 
     <body>
-        <div class="modal" id="modal">
-            <div class="content" id="content">
-                <h1>SNAKE GAME</h1>
-                <select id="select">
-                    <option value="1">1 Jogador</option>
-                    <option value="2">2 Jogadores</option>
-                </select>
-                <button onclick="startGame( parseInt(document.getElementById('select').value) )">INICIAR</button>
-            </div>
-        </div>
-        <script type="text/javascript" src="js/phaser.min.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>
-    </body>
+        <div class="container">
 
+            <a href="snake_game/">
+                <div class="card-parent">
+                    <div class="card item1"></div>
+                    <div class="text">
+                        <p class="title">Snake Game</p>
+                        <span class="subtitle">O clássico jogo da cobrinha desenvolvido usando PhaserJS.</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://colab.research.google.com/drive/1DEJ1F_v4IW3CQnkYZsCviiEdQxBIELi6" target="_blank">
+                <div class="card-parent">
+                    <div class="card item2"></div>
+                    <div class="text">
+                        <p class="title">Compressor de Imagens</p>
+                        <span class="subtitle">Aplicação de compressão de matrizes com SVD em Python.</span>
+                    </div>
+                </div>
+            </a>
+            
+        </div>
+    </body>
 </html>
