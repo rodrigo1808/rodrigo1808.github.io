@@ -3,7 +3,7 @@ class Task {
         this.description = description;
         this.finished = false;
         this.id = description.replace(/\s/g, '');
-        this.html = "<div class='task' id=" + description.replace(/\s/g, '') + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box_outline_blank</i> <p>" + description +  "</p> </div>"
+        this.html = "<div class='full-item'><div class='task' id=" + description.replace(/\s/g, '') + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box_outline_blank</i> <p>" + description +  "</p> </div> <i class='material-icons delete-task' id='" + description.replace(/\s/g, '') + "' onclick='deleteTask(this.id)'>close</i></div>"
     }
 
     getDescription() {
@@ -27,7 +27,6 @@ function writeTasks(state) {
     }
 
     for(let task of tasksArray) {
-        console.log(task)
         fullHtmlTasks = fullHtmlTasks + task.html;
     }
 
@@ -51,28 +50,47 @@ function newTask() {
 
 function taskClicked(description) {
     console.log(description);
+    let task = findTask(description);
+    if(task.finished) {
+        unfinishTask(task);
+    } else {
+        finishTask(task);
+    }
+}
+
+function findTask(description) {
     for(let task of tasksArray) {
         if(task.id === description) {
-            console.log(task);
-            if(task.finished) {
-                unfinishTask(task);
-            } else {
-                finishTask(task);
-            }
-            break;
+            return task;
         }
     }
 }
 
+function cleanTasks() {
+    tasksArray = [];
+    writeTasks('new');
+}
+
 function finishTask(task) {
-    task.html = "<div class='task' id=" + task.id + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box</i> <p>" + task.description +  "</p> </div>"
+    task.html = "<div class='full-item'><div class='task' id=" + task.id + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box</i> <p>" + task.description +  "</p> </div> <i class='material-icons delete-task' id='" + task.id + "' onclick='deleteTask(this.id)'>close</i></div>";
     task.finished = true;
     writeTasks('new');
 }
 
 function unfinishTask(task) {
-    task.html = "<div class='task' id=" + task.id + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box_outline_blank</i> <p>" + task.description +  "</p> </div>"
+    task.html = "<div class='full-item'><div class='task' id=" + task.id + " onclick='taskClicked(this.id)'> <i class='material-icons'>check_box_outline_blank</i> <p>" + task.description +  "</p> </div> <i class='material-icons delete-task' id='" + task.id + "' onclick='deleteTask(this.id)'>close</i></div>";
     task.finished = false;
+    writeTasks('new');
+}
+
+function deleteTask(description) {
+    for(let i = 0; i < tasksArray.length; i++) {
+        if(tasksArray[i].id === description) {
+            tasksArray.splice(i, 1);
+            break;
+        }
+    }
+    console.log(description + ' deletada');
     writeTasks('new');
 }
 

@@ -33,6 +33,40 @@ body {
   flex-direction: column;
 }
 
+main .tasks-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main .tasks-title i {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+main .tasks-title i:hover {
+  color: rgb(251, 38, 38);
+}
+
+main .tasks-title i:hover + span{
+  visibility: visible;
+  color: rgb(251, 38, 38);
+  font-weight: bold;
+}
+
+main .tasks-title .clean-tasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.tasks-title .clean-tasks span {
+  visibility: hidden;
+  color: transparent;
+  transition: background 3s;
+}
+
 aside.new-task-area {
     background-color: rgb(228, 228, 228);
     border-radius: 5px;
@@ -70,14 +104,32 @@ aside.new-task-area button:hover {
   background: #8C5845;
 }
 
-main .tasks .task:first-of-type {
+main .tasks .full-item:first-of-type {
   margin-top: 15px;
+}
+
+main .tasks .full-item {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.full-item .delete-task:hover {
+  font-weight: bold;
+  color: red;
+}
+
+.tasks .full-item i {
+  cursor: pointer;
 }
 
 main .tasks .task {
   display: flex;
   align-items: center;
   height: 40px;
+  flex: 1;
 }
 
 main .tasks .task:hover {
