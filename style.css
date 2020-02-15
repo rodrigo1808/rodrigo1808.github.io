@@ -8,7 +8,6 @@ body {
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    height: 100%;
     padding: 60px 0;
 
     display: grid;
@@ -36,6 +35,10 @@ a {
 
 .item2 {
     background-image: url(./compression.png);
+}
+
+.item3 {
+    background-image: url(./to-do-list/assets/imgs/to_do_list.png);
 }
 
 .card {

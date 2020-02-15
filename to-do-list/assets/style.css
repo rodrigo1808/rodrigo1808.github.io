@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap');
+
+* {
+  font-family: 'Quicksand', sans-serif;
+  color: #260202;
+}
+
+body {
+  background: #F2F2F2;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.container aside {
+    margin-left: 30px;
+}
+
+.container main {
+  flex: 1;
+  padding: 0 15px 20px;
+}
+
+.container main .tasks {
+  display: flex;
+  flex-direction: column;
+}
+
+aside.new-task-area {
+    background-color: rgb(228, 228, 228);
+    border-radius: 5px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside.new-task-area textarea {
+  width: 90%;
+  resize: none;
+  border-radius: 2px;
+  font-size: 16px;
+}
+
+aside.new-task-area button {
+  margin: 20px 0;
+}
+
+aside.new-task-area button {
+  width: 90%;
+  border: 0;
+  background: #A67356;
+  border-radius: 2px;
+  padding: 15px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFF;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+aside.new-task-area button:hover {
+  background: #8C5845;
+}
+
+main .tasks .task:first-of-type {
+  margin-top: 15px;
+}
+
+main .tasks .task {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+main .tasks .task:hover {
+  transition: background 0.3s;
+  background-color: rgb(228, 228, 228);
+  color: #8C5845;
+  cursor: pointer;
+}
+
+main .tasks .task:hover i, main .tasks .task:hover p{
+  color: #8C5845;
+  font-weight: bold;
+}
+
+.tasks .task p {
+  margin-left: 20px;
+}
+  
+@media (max-width: 1000px) {
+
+    .container {
+      flex-direction: column-reverse;
+    }
+  
+    .container aside {
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .container main {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px 0;
+    }
+}
