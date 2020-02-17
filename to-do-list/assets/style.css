@@ -21,6 +21,10 @@ body {
 
 .container aside {
     margin-left: 30px;
+    width: 320px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 .container main {
@@ -64,30 +68,40 @@ main .tasks-title .clean-tasks {
 .tasks-title .clean-tasks span {
   visibility: hidden;
   color: transparent;
-  transition: background 3s;
 }
 
-aside.new-task-area {
-    background-color: rgb(228, 228, 228);
-    border-radius: 5px;
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.new-task-area {
+  background-color: rgb(228, 228, 228);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-aside.new-task-area textarea {
+.save-alert {
+  background-color: rgb(228, 228, 228);
+  padding: 0 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.save-alert p {
+  margin-top: 0;
+}
+
+.new-task-area textarea {
   width: 90%;
   resize: none;
   border-radius: 2px;
   font-size: 16px;
 }
 
-aside.new-task-area button {
+.new-task-area button {
   margin: 20px 0;
 }
 
-aside.new-task-area button {
+.new-task-area button {
   width: 90%;
   border: 0;
   background: #A67356;
@@ -100,7 +114,7 @@ aside.new-task-area button {
   transition: background 0.3s;
 }
 
-aside.new-task-area button:hover {
+.new-task-area button:hover {
   background: #8C5845;
 }
 
@@ -164,4 +178,49 @@ main .tasks .task:hover i, main .tasks .task:hover p{
       width: 100%;
       padding: 15px 0;
     }
+}
+
+/* Fade in */
+
+.save-alert {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+}
+
+@keyframes fadein {
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+
+@-moz-keyframes fadein { /* Firefox */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+
+@-o-keyframes fadein { /* Opera */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity: 1;
+  }
 }

@@ -13,6 +13,7 @@ class Task {
 
 var tasksArray = [];
 var fullHtmlTasks = "";
+var saveAlertShowed = false;
 
 function init() {
     if(localStorage.getItem('tasks')) {
@@ -38,11 +39,12 @@ function writeTasks(state) {
 function newTask() {
     let newTaskDescription = document.getElementById('newTask').value;
     if(newTaskDescription) {
-        if(newTaskDescription[0] === '<') {
-            return;
-        }
         let task = new Task(document.getElementById('newTask').value);
         document.getElementById('newTask').value = "";
+        if(tasksArray.length === 0 && !saveAlertShowed) {
+            document.getElementById('save-alet-area').innerHTML = "<div class='save-alert'><h4>Recado</h4><p>Suas tarefas ficarão salvas mesmo após fechar a aba.</p></div>";
+            saveAlertShowed = true;
+        }
         tasksArray.push(task);
         writeTasks('new');
     }

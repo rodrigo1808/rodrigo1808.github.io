@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="assets/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>To Do List</title>
+    <title>Lista de Tarefas Online</title>
+    <meta name="description" content="Lista de tarefas simples para organização pessoal, controle suas tarefas diárias e tenha uma maior produtividade.">
 </head>
 
 <body>
@@ -30,10 +31,21 @@
 
         </main>
 
-        <aside class="new-task-area">
-            <h3>Adicionar nova tarefa</h3>
-            <textarea name="" id="newTask" cols="30" rows="4"></textarea>
-            <button onclick="newTask()">SALVAR</button>
+        <aside>
+            <div class="new-task-area">
+                <h3>Adicionar nova tarefa</h3>
+                <textarea name="" id="newTask" cols="30" rows="4"></textarea>
+                <button onclick="newTask()">SALVAR</button>
+            </div>
+
+            <div id="save-alet-area">
+                <!-- <div class="save-alert">
+                    <h4>Recado</h4>
+                    <p>Suas tarefas ficarão salvas mesmo após fechar a aba.</p>
+                </div> -->
+            </div>
+            
+            
         </aside>
 
     </div>
