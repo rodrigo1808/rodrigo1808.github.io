@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #fff;
+    overflow: hidden;
+    display: block;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100px;
+    padding: 20px 100px;
+}
+
+nav .logo {
+    font-family: 'Titillium Web';
+    font-size: 40px;
+    color: #1E8AB4;
+}
+
+nav .pages {
+    margin-left: 80px;
+    font-family: 'Abel';
+    font-weight: lighter;
+}
+
+nav .pages li {
+    font-size: 18px;
+    cursor: pointer;
+    list-style-type: none;
+    display: inline;
+    margin-left: 35px;
+}
+
+nav .pages li:hover {
+    color: #1E8AB4;
+}
+
+nav .pages li:first-child {
+    margin-left: 0;
+}
+
+nav .menu {
+    visibility: hidden;
+    position: absolute;
+    right: 100px;
+    color: white;
+    cursor: pointer;
+}
+
+main {
+    height: calc(100vh - 100px);
+    padding: 0 0px 0 100px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+main section {
+    width: 100%;
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    height: 80%;
+}
+
+section img {
+    height: 100%;
+    animation-name: soft-top-in;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+}
+
+.text {
+    padding-top: 20px;
+    flex: 1;
+}
+
+.text h1, .text h2 {
+    animation-name: dissolve;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+}
+
+.buttons {
+    opacity: 0;
+    animation-name: dissolve;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+.text h1 {
+    font-family: 'Abel';
+    font-size: 72px;
+    margin-bottom: 30px;
+}
+
+.text h2 {
+    font-family: 'Titillium Web';
+    font-size: 24px;
+    font-weight: lighter;
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttons button {
+    width: 220px;
+    border: 0;
+    margin-top: 40px;
+    font-family: 'Titillium Web';
+    background: #4CB3DB;
+    border-radius: 2px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: lighter;
+    color: #FFF;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: -1px 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.buttons button:first-child {
+    background: #1E8AB4;
+}
+
+.buttons button:last-child {
+    margin-left: 15px;
+}
+
+.buttons button:first-child:hover {
+    background: rgb(23, 104, 136);
+}
+
+.buttons button:last-child:hover {
+    background: rgb(59, 140, 172);
+}
+
+.blue {
+    position: absolute;
+    z-index: -3;
+    top: 0;
+    right: 0;
+    width: 40vw;
+    border-bottom: 100vh solid #2093BF;
+    border-left: 10vw solid transparent;
+    height: 0;      
+}
+
+@media (max-width: 1600px) {
+    .buttons button {
+        width: 180px;
+        font-size: 14px;
+    }
+
+    .text h1 {
+        font-size: 64px;
+    }
+
+    .text h2 {
+        font-size: 20px;
+    }
+
+    section img {
+        height: 85%;
+    }
+}
+
+@media (max-width: 1350px) {
+    main section {
+        height: 90%;
+    }
+
+    section img {
+        height: 80%;
+    }
+
+    .pages {
+        visibility: hidden;
+    }
+
+    .menu i {
+        visibility: visible;
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 1000px) {
+    main section {
+        height: 100%;
+        width: 60%;
+    }
+
+    main {
+        justify-content: flex-start;
+    }
+
+    section img {
+        visibility: hidden;
+        width: 0;
+    }
+
+    .text {
+        padding-top: 0;
+    }
+
+    .text h1 {
+        font-size: 52px;
+    }
+
+    .text h2 {
+        font-size: 18px;
+    }
+
+    .blue {
+        width: 30vw;
+    }
+
+    .buttons button {
+        width: 220px;
+    }
+}
+
+@media (max-width: 700px) {
+    nav {
+        padding: 20px 30px;
+        width: 0;
+    }
+
+    main {
+        padding-left: 30px;
+    }
+
+    nav .menu {
+        right: 30px;
+    }
+
+    .text h1 {
+        margin-top: 15px;
+        font-size: 42px;
+    }
+
+    .text h2 {
+        font-size: 14px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .buttons button:last-child {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+}
+
+@keyframes soft-top-in {
+    0% {margin-top: -5vh; opacity: 0;}
+    100% {margin-top: 0px; opacity: 1;}
+}
+
+@keyframes dissolve {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
