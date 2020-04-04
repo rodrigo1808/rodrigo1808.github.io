@@ -1,0 +1,41 @@
+section.explanation {
+    padding: 125px;
+    background-color: #F3E1E7;
+}
+
+section.explanation .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.explanation .row img {
+    width: 280px;
+    margin-left: 50px;
+}
+
+section.explanation .row .explanation-text {
+    font-size: 20px;
+    color: #794E61;
+    max-width: 670px;
+}
+
+@media only screen and (max-width: 600px) {
+    section.explanation .row {
+        flex-direction: column-reverse;
+    }
+
+    section.explanation {
+        padding: 70px 25px;
+    }
+
+    section.explanation .row img {
+        width: 200px;
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+    section.explanation .row .explanation-text {
+        font-size: 18px;
+    }
+}

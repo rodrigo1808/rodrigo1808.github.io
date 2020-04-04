@@ -19,6 +19,7 @@ section.introduction .main-content {
 
 .main-content .main-text {
     width: 100%;
+    max-width: 1000px;
 }
 
 .main-content .main-text h1 {
@@ -38,7 +39,8 @@ section.introduction .main-content {
 }
 
 section.introduction .main-content .owl {
-    width: 40vw;
+    width: 30vw;
+    margin-left: 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -57,6 +59,6 @@ section.introduction .main-content .owl {
     }
 
     .main-content .main-text .google-play {
-        margin-top: 20px;
+        margin-top: 15px;
     }
 }
