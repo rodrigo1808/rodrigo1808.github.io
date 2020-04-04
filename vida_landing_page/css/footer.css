@@ -1,0 +1,37 @@
+footer {
+    display: flex;
+    padding: 30px 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+footer .row {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+footer .row a {
+    display: flex;
+}
+
+footer .row img {
+    width: 28px;
+}
+
+footer .row .usa-icon {
+    margin-right: 10px;
+}
+
+footer .row img.selected {
+    border-radius: 50%;
+    border: 3px solid rgb(82, 53, 66);
+}
+
+@media only screen and (max-width: 600px) {
+    footer {
+        padding: 20px 0;
+    }
+}
