@@ -1,0 +1,37 @@
+nav {
+    background-color: #794E61;
+    padding: 0 125px;
+    position: fixed;
+}
+
+nav .logo-name {
+    font-family: CaveatBrush;
+    font-size: 36px;
+}
+
+nav .social-medias {
+    margin-top: 14px;
+}
+
+nav .social-medias a {
+    display: flex;
+}
+
+nav .social-medias .social-media {
+    height: 36px;
+    width: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    nav {
+        padding: 0 15px;
+    }
+
+    nav .social-medias {
+        margin-top: 10px;
+    }
+
+    nav .social-medias a {
+        padding: 0 7px;
+    }
+}
