@@ -50,9 +50,9 @@ function renderProjects() {
         projectsTag.insertAdjacentHTML('beforeend', `
         <a href="${project.href}" target="_blank">
             <div class="card-parent">
-                <div class="text">
-                    <p class="title">${project.title}</p>
-                    <span class="subtitle">${project.description}</span>
+                <div class="text-card">
+                    <p class="title-card">${project.title}</p>
+                    <span class="subtitle-card">${project.description}</span>
                 </div>
                 <div class="card-background" style="background-image: url(${project.url});"></div>
             </div>
