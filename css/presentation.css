@@ -1,0 +1,44 @@
+.presentation {
+  height: 100vh;
+  background-color: var(--color-dark);
+  display: flex;
+}
+
+.presentation-content {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: 30px;
+  color: var(--color-light);
+}
+
+.presentation-content p {
+  font-size: 22px;
+}
+
+.presentation-content h1 {
+  font-size: 48px;
+}
+
+.presentation-content lottie-player {
+  width: 600px;
+  height: 600px;
+}
+
+@media (max-width: 800px) {
+  .presentation-content {
+      grid-template-columns: 1fr;
+  }
+
+  .presentation-content .animation {
+      display: none;
+  }
+
+  .presentation-content p {
+      font-size: 16px;
+  }
+  
+  .presentation-content h1 {
+      font-size: 36px;
+  }
+}
